@@ -1,0 +1,48 @@
+{
+    "name": "bokt/flarum-phpbb-migrate",
+    "description": "Allows migrating phpbb to flarum",
+    "keywords": [
+        "extension",
+        "flarum", "bokt",
+        "telescope", "debug"
+    ],
+    "type": "flarum-extension",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Daniël Klabbers",
+            "email": "daniel@klabbers.email",
+            "homepage": "http://luceos.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/bokt/flarum-phpbb-migrate/issues",
+        "source": "https://github.com/bokt/flarum-phpbb-migrate"
+    },
+    "require": {
+        "flarum/core": "^0.1.0-beta.13",
+        "flarum/lock": "^0.1.0-beta.13",
+        "flarum/subscriptions": "^0.1.0-beta.13",
+        "flarum/suspend": "^0.1.0-beta.13",
+        "fof/follow-tags": "^0.3.4",
+        "fof/user-bio": "^0.1.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bokt\\Phpbb\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "PhpBB migrate",
+            "icon": {
+                "image": "resources/logo.svg",
+                "backgroundColor": "#EBF1FD",
+                "color": "#3a98d0",
+                "backgroundSize": "90%",
+                "backgroundRepeat": "no-repeat",
+                "backgroundPosition": "center"
+            }
+        }
+    }
+}
