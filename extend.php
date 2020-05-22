@@ -1,7 +1,11 @@
 <?php
 
-namespace Bokt\Telescope;
+namespace Bokt\Phpbb;
+
+use Flarum\Extend\Console;
 
 return [
-    new Extend\Provider(Providers\TelescopeProvider::class)
+    new Extend\Provider(Provider::class),
+    (new Console())
+        ->command(Commands\MigrateCommand::class)
 ];

@@ -2,7 +2,7 @@
 
 namespace Bokt\Phpbb\Concerns;
 
-use App\Sync\phpBB\Group;
+use Bokt\Phpbb\Models\Group;
 use Flarum\Group\Group as Flarum;
 
 trait ReplacesGenericGroups

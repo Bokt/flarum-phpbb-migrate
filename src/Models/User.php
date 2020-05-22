@@ -71,13 +71,11 @@ class User extends Model
     public function import(): ?AbstractModel
     {
         /** @var Flarum $user */
-        $user = $this->time(function () {
-            return Flarum::with('groups')->findOrNew($this->getKey());
-        }, 'read user to import');
+        $user = Flarum::with('groups')->findOrNew($this->getKey());
 
         $user->id = $this->getKey();
-
-        $user->display_name = $this->username;
+// @todo this doesn't work with a vanilla Flarum install, it needs a column..
+//        $user->display_name = $this->username;
 
         if (! $user->exists) {
             /** @var UserValidator $validate */
@@ -150,16 +148,5 @@ class User extends Model
     public static function get(Flarum $user = null): ?User
     {
         return $user ? User::find($user->id) : null;
-    }
-
-    public function migratePassword(string $password)
-    {
-        /** @var Flarum $user */
-        $user = Flarum::find($this->user_id);
-
-        if ($user) {
-            $user->password = $password;
-            $user->save();
-        }
     }
 }
