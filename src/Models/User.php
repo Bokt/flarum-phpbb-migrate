@@ -84,7 +84,11 @@ class User extends Model
 
             $username = $this->username_clean;
 
-            $user->username = preg_replace('/\s/', '_', trim($username, ' '));
+            $user->username = preg_replace(['/\s/', '/\W/'], '_', trim($username, ' '));
+
+            if (empty($user->username)) {
+                return null;
+            }
 
             if ($user->newQuery()
                 ->where('username', $user->username)
@@ -105,7 +109,7 @@ class User extends Model
         }
 
         $user->joined_at          = $this->user_regdate;
-        $user->email              = $this->user_email;
+        $user->email              = $this->getEmail();
         $user->password           = $this->user_password;
         $user->comment_count      = $this->user_posts;
         $user->avatar_url         = $this->user_avatar;
@@ -148,5 +152,19 @@ class User extends Model
     public static function get(Flarum $user = null): ?User
     {
         return $user ? User::find($user->id) : null;
+    }
+
+    protected function getEmail()
+    {
+        $exists = Flarum::query()->where('email', $this->user_email)->where('id', '!=', $this->user_id)->exists();
+
+        if ($exists) {
+            list($prefix, $domain) = explode('@', $this->user_email);
+            list($prefix, $subaddr) = explode('+', "$prefix+");
+
+            return "$prefix+$subaddr{$this->user_id}@$domain";
+        }
+
+        return $this->user_email;
     }
 }

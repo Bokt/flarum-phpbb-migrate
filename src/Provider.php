@@ -8,6 +8,14 @@ use Illuminate\Support\Arr;
 
 class Provider extends AbstractServiceProvider
 {
+    public function register()
+    {
+        // Overrides Flarum native validator to allow usernames with length 1 and up.
+        $this->app->bind(\Flarum\User\UserValidator::class, function ($app) {
+            return $app->make(Validators\UserValidator::class);
+        });
+    }
+
     public function boot()
     {
         $this->app->extend(Manager::class, function (Manager $manager) {
