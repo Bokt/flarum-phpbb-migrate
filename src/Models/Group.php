@@ -25,7 +25,7 @@ class Group extends Model
     public function import(): ?AbstractModel
     {
         if ($this->group_id <= 4) {
-            throw new InvalidArgumentException("Cannot sync group which is reserved in Flarum (admin, guest, member, mod).");
+            throw new InvalidArgumentException("Cannot sync group {$this->group_id} {$this->group_name}, because ID is reserved in Flarum (admin, guest, member, mod).");
         }
 
         $group = $this->getGroup($this);

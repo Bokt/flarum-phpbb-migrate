@@ -3,6 +3,7 @@
 namespace Bokt\Phpbb;
 
 use Bokt\Phpbb\Models\Model;
+use Exception;
 use Illuminate\Console\OutputStyle;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -46,7 +47,15 @@ class Pipeline
     protected function dispatch(Builder $query)
     {
         $query->each(function (Model $model) {
-            $model->import();
+            try {
+                $model->import();
+            } catch (Exception $e) {
+                if ($this->output) {
+                    $this->output->error($e->getMessage());
+                } else {
+                    throw $e;
+                }
+            }
         });
     }
 
