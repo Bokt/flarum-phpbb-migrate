@@ -158,9 +158,11 @@ class User extends Model
     {
         $exists = Flarum::query()->where('email', $this->user_email)->where('id', '!=', $this->user_id)->exists();
 
-        if ($exists) {
+        if ($exists && $this->user_email && Str::contains($this->user_email, '@')) {
             list($prefix, $domain) = explode('@', $this->user_email);
             list($prefix, $subaddr) = explode('+', "$prefix+");
+
+            $subaddr = substr($subaddr, 0, -1);
 
             return "$prefix+$subaddr{$this->user_id}@$domain";
         }
